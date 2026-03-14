@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Check your answers before sending" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    <h1 class="govuk-heading-xl">Check your answers before sending</h1>
+
+    {{ govukSummaryList({
+      rows: [
+      {
+        key: { text: "What type of bin was not collected?" },
+        value: { text: data["bin-type"] if data["bin-type"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/bin-type",
+            text: "Change",
+            visuallyHiddenText: "what type of bin was not collected?"
+          }]
+        }
+      },
+      {
+        key: { text: "When should your bin have been collected?" },
+        value: { text: data["collection-date"] if data["collection-date"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/collection-date",
+            text: "Change",
+            visuallyHiddenText: "when should your bin have been collected?"
+          }]
+        }
+      },
+      {
+        key: { text: "Was your bin out before 6am on collection day?" },
+        value: { text: data["bin-accessible"] if data["bin-accessible"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/bin-accessible",
+            text: "Change",
+            visuallyHiddenText: "was your bin out before 6am on collection day?"
+          }]
+        }
+      },
+      {
+        key: { text: "Was your bin at your normal collection point?" },
+        value: { text: data["bin-location"] if data["bin-location"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/bin-location",
+            text: "Change",
+            visuallyHiddenText: "was your bin at your normal collection point?"
+          }]
+        }
+      },
+      {
+        key: { text: "What is your postcode?" },
+        value: { text: data["postcode"] if data["postcode"] else "Not answered" },
+        actions: {
+          items: [{
+            href: "/postcode",
+            text: "Change",
+            visuallyHiddenText: "what is your postcode?"
+          }]
+        }
+      }
+      ]
+    }) }}
+
+    <form method="post" novalidate>
+      {{ govukButton({ text: "Confirm and send" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
