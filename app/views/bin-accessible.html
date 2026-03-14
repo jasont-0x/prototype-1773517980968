@@ -1,0 +1,42 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "Was your bin out before 6am on collection day?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["bin-accessible"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["bin-accessible"], href: "#bin-accessible" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "bin-accessible",
+      fieldset: {
+        legend: {
+          text: "Was your bin out before 6am on collection day?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Bins must be at your collection point before 6am. Collection times vary but can be as early as 6am across the UK and Ireland." },
+      errorMessage: errors["bin-accessible"] if errors else null,
+      value: data["bin-accessible"],
+      items: [
+        { value: "yes-it-was-out-before-6am", text: "Yes, it was out before 6am" },
+        { value: "no-it-was-put-out-after-6am", text: "No, it was put out after 6am" },
+        { value: "i-m-not-sure-what-time-it-was-put-out", text: "I'm not sure what time it was put out" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
