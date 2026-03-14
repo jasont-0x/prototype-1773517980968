@@ -1,0 +1,43 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName = "What type of bin was not collected?" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {{ govukBackLink({ text: "Back", href: "javascript:history.back()" }) }}
+
+    {% if errors and errors["bin-type"] %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [{ text: errors["bin-type"], href: "#bin-type" }]
+    }) }}
+    {% endif %}
+
+    <form method="post" novalidate>
+    {{ govukRadios({
+      name: "bin-type",
+      fieldset: {
+        legend: {
+          text: "What type of bin was not collected?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: { text: "Select the bin that was missed on your collection day." },
+      errorMessage: errors["bin-type"] if errors else null,
+      value: data["bin-type"],
+      items: [
+        { value: "general-household-waste-black-or-grey-bin", text: "General household waste (black or grey bin)" },
+        { value: "recycling-blue-green-or-clear-bin", text: "Recycling (blue, green or clear bin)" },
+        { value: "garden-waste-brown-or-green-bin", text: "Garden waste (brown or green bin)" },
+        { value: "food-waste-small-kitchen-caddy-or-bin", text: "Food waste (small kitchen caddy or bin)" }
+      ]
+    }) }}
+      {{ govukButton({ text: "Continue" }) }}
+    </form>
+
+  </div>
+</div>
+{% endblock %}
